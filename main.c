@@ -61,8 +61,9 @@ main(void)
                 XMatchVisualInfo(dpy, screen, 32, TrueColor, &vinfo);
                 attr.colormap = XCreateColormap(dpy, root, vinfo.visual, AllocNone);
                 attr.override_redirect = true;
-                // argb, run xcompmgr to get transparency
-                attr.background_pixel = 0x00000000;
+                attr.background_pixel = 0x00000000; // argb color
+                attr.border_pixel = 0x00000000; // need compositor for transp.
+
                 window = XCreateWindow(
                         dpy, root,
                         mouse_x, mouse_y,
@@ -93,7 +94,7 @@ main(void)
         XFillArc(dpy, window, gc, 0, 0, SIZE, SIZE, 0, 64 * 360);
         XFlush(dpy);
 
-        for(int i = 0; i < 100; i++) {
+        for(;;) {
                 hl_get_cursor_position(&mouse_x, &mouse_y);
                 XMoveWindow(dpy, window, mouse_x, mouse_y);
                 XRaiseWindow(dpy,window);
