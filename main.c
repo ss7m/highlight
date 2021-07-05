@@ -30,10 +30,9 @@ hl_die(const char *fmt, ...)
 static void
 hl_get_cursor_position(int *x, int *y)
 {
-        Window w1, w2;
-        int _x, _y;
-        unsigned int _mask;
-        XQueryPointer(dpy, root, &w1, &w2, x, y, &_x, &_y, &_mask);
+        Window w;
+        int i;
+        XQueryPointer(dpy, root, &w, &w, x, y, &i, &i, (unsigned int *)&i);
         *x -= SIZE / 2;
         *y -= SIZE / 2;
 }
@@ -94,7 +93,7 @@ main(void)
         XFillArc(dpy, window, gc, 0, 0, SIZE, SIZE, 0, 64 * 360);
         XFlush(dpy);
 
-        for(;;) {
+        for(int i = 0; i < 100; i++) {
                 hl_get_cursor_position(&mouse_x, &mouse_y);
                 XMoveWindow(dpy, window, mouse_x, mouse_y);
                 XRaiseWindow(dpy,window);
