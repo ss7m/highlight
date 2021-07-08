@@ -8,7 +8,7 @@ CFLAGS=-Wall -Wextra -std=c99 -pedantic -Werror \
 	   -Wold-style-definition -Wvla \
 	   $(foreach p,$(LIBS),$(shell pkg-config --cflags $(p)))
 
-LDFLAGS=$(foreach p,$(LIBS),$(shell pkg-config --libs $(p))) -lm
+LDFLAGS=$(foreach p,$(LIBS),$(shell pkg-config --libs $(p)))
 
 SRCS=main.c
 OBJS=$(SRCS:.c=.o)
